@@ -7,10 +7,13 @@ class Starter extends Denizen {
   }
 
   update(t) {
-    // no physics for Starter
+    if (this.width > 60) this.width -= 2;
+    if (this.height < 60) this.height += 1;
   }
 
   onClick(event) {
+    this.width = 100;
+    this.height = 40;
     var xVel = randRangeInt(-300, 300);
     var yVel = 400 - Math.abs(xVel);
     var s = new Seed({

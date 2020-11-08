@@ -3,8 +3,9 @@ class BiteFish extends Fish {
     super(options);
     this.imageUri = "/images/bite-fish.gif";
     this.maxSwimSpeed = 200;
-    this.width = 30;
-    this.height = 30;
+    this.width = options.width || 30;
+    this.height = options.width || 30;
+    this.isTasty = false;
   }
   updateOneTick() {
     super.updateOneTick();
@@ -15,19 +16,24 @@ class BiteFish extends Fish {
           ents[fish].position.x < this.position.x + this.width &&
           ents[fish].position.y + ents[fish].height > this.position.y &&
           ents[fish].position.y < this.position.y + this.height
-          ) {
-            this.tank.removeDenizen(fish,undefined);
+      ) {
+        this.tank.removeDenizen(fish,undefined);
+        this.width += 10;
+        this.height += 10;
       }
     }
     // on collision, eat a fish and then increase size?
   }
   onClick() {
     // after on collision is implemented, split size in half after splitting
-    var f = new BiteFish({
+    this.width = Math.ceil(this.width / 2);
+    this.height = Math.ceil(this.height / 2);
+    let f = new BiteFish({
+      width: this.width,
+      height: this.height,
       tank: this.tank,
       position: this.position,
       velocity: this.makeNewVelocity(),
-      type: this.tank.getRandomSpecies(),
     });
   }
 }
